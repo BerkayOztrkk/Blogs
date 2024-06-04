@@ -1,0 +1,29 @@
+﻿@using EntityLayer.Entities
+@model List<Author>
+
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Author About</h4>
+                <h2> @ViewBag.n</h2>
+                
+                <div class="d-flex mt-5 align-items-top">
+                    @foreach (var item in Model)
+                    {
+                        
+                    
+                    <img src="~/writer/assets/images/faces/face3.jpg" class="img-sm rounded-circle mr-3" alt="image">
+                    <div class="mb-0 flex-grow">
+                        <h5 class="mr-2 mb-2">@item.Username</h5>
+                        <p class="mb-0 font-weight-light">@item.Email</p>
+                    </div>
+                    <div class="ml-auto">
+                       
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

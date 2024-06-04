@@ -1,0 +1,24 @@
+﻿@model EntityLayer.Entities.Blog
+@{
+    ViewData["Title"] = "BlogAdd";
+    Layout = "~/Views/Shared/AuthorLayout.cshtml";
+}
+
+<h1>Create Blog</h1>
+
+@using (Html.BeginForm("BlogAdd", "Blog", FormMethod.Post))
+{
+    @Html.Label("Blog Name")
+    @Html.TextBoxFor(x=>x.Name,new {@class="form-control"})
+    @Html.ValidationMessageFor(x=>x.Name)
+    <br />
+    <br />
+    
+    @Html.Label("Blog Content")
+    @Html.TextAreaFor(x => x.Content,15,3, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Content)
+    <br />
+    <br />
+    <br />
+    <button class="btn btn-info">Save</button>
+}

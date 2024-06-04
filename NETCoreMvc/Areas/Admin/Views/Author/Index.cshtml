@@ -1,0 +1,133 @@
+﻿@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Ajax</h1>
+<br />
+<button type="button" id="btngetlist" class="btn btn-info">Author List</button>
+<button type="button" id="btngetbyid" class="btn btn-success"> Get Author </button>
+<button type="button" id="btnaddauthor" class="btn btn-info"> Add Author </button>
+<button type="button" id="btndeleteauthor" class="btn btn-danger"> Delete Author </button>
+<button type="button" id="btnupdateauthor" class="btn btn-warning"> Update Author </button>
+
+<br />
+<br />
+<div id="authorlist">
+</div>
+<br />
+<div id="authorget">
+
+</div>
+<br />
+<div>
+	<input type="text" id="authorid" placeholder=" Author Id Required " class="form-control" />
+</div>
+<br />
+<br />
+<div>
+	<input type="text" class="form-control" id="txtAuthorId" placeholder="Author Id" />
+	<br />
+	<input type="text" class="form-control" id="txtAuthorName" placeholder="Author Name" />
+	
+	
+
+</div>
+<br />
+<br />
+<div>
+	<input type="text" class="form-control" id="txtId" placeholder="  Author Id For Delete" />
+</div>
+<br />
+<div>
+<input  type="text" id="txtid" placeholder="Author Id For Update"/>
+<input  type="text" id="txtname" placeholder="Author Name For Update"/>
+</div>
+<br />
+
+
+@section scripts {
+	<script>
+		$("#btngetlist").click(function () {
+			$.ajax({
+				contentType: "application/json",
+				dataType: "json",
+				type: "Get",
+				url: "/Admin/Author/AuthorList/",
+				success: function (successcallback) {
+					let a = jQuery.parseJSON(successcallback);
+					console.log(a);
+					let tablehtml = "<table class=table table-bordered> <tr> <th>AuthorId </th>  <th> Author Name</th> </tr>";
+					$.each(a, (index, value) => {
+						tablehtml += `<tr><td>${value.Id}</td> <td>${value.Name}</td></tr>`
+					});
+					tablehtml += "</table>";
+					$("#authorlist").html(tablehtml);
+				}
+			});
+		});
+		$("#btngetbyid").click(x => {
+			let id = $("#authorid").val();
+			$.ajax({
+				contentType: "application/json",
+				dataType: "json",
+				type: "get",
+				url: "/Admin/Author/GetAuthorById",
+				data: { authorid: id },
+				success: function (successcallback) {
+					let  a =jQuery.parseJSON(successcallback)
+					console.log(a);
+					let getvalue = `<table class=table table-bordered><tr><th>Author Id</th> <th>Author Name</th></tr><tr><td>${a.Id}</td> <td>${a.Name}</td> </tr></table>`;
+					$("#authorget").html(getvalue);
+				}
+			});
+			
+		})
+		$("#btnaddauthor").click(function () {
+			let author = {
+				Id: $("#txtAuthorId").val(),
+				Name: $("#txtAuthorName").val()
+			};
+
+			$.ajax({
+				type: "post",
+				url: "/Admin/Author/AddAuthor/",
+				data: author,
+				success: function (successcallback) {
+					let result = jQuery.parseJSON(successcallback);
+					alert("Successful");
+				}
+			});
+		});
+		$("#btndeleteauthor").click(x => {
+			let id = $("#txtId").val();
+			$.ajax({
+				url: "/Admin/Author/DeleteAuthor/" + id,
+				type: "delete",
+				dataType: "json",
+				success: function (successcallback) {
+					l
+					alert("Successful");
+				}
+
+			});
+		});
+		$("#btnupdateauthor").click(function () {
+			let author = {
+				Id: $("#txtid").val(),
+				Name: $("#txtname").val(),
+
+			};
+			$.ajax({
+				type:"post",
+				url:"/Admin/Author/UpdateAuthor/",
+				data:author,
+				success: function (successcallback) {
+					alert("Update Successful")
+				}
+			})
+		})
+
+		
+	</script>
+}

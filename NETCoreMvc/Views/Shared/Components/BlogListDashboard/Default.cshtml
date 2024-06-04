@@ -1,0 +1,47 @@
+﻿@using EntityLayer.Entities
+@model List<Blog>
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Blogs</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th> Blog Name </th>
+                                <th> Content </th>
+                                <th> Status </th>
+                                <th> Last Update </th>
+                                <th> </th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                
+                            
+                            <tr>
+                                <td>
+                                        <img src="~/web/images/4.jpg" class="mr-2" alt="image"> @item.Name
+                                </td>
+                                    <td>@(item.Content.Length > 50 ? item.Content.Substring(0, item.Content.Substring(0, 55).LastIndexOf(" "))+"..." : item.Content +"...") </td>
+                                <td>
+                                    <label class="badge badge-gradient-success">@item.Status</label>
+                                </td>
+                                    <td> @(((DateTime)item.CreatedDate).ToString("dd.MM.yyyy")) </td>
+                                    <td>
+                                        <a href="/Blog/BlogDetails/@item.BlogId">Read More</a>
+                                    </td>
+                                
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
